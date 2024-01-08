@@ -11,6 +11,7 @@ import (
 	"github.com/dolotech/lib/db"
 	"server/model"
 	"server/game"
+	"fmt"
 )
 
 var Commit = ""
@@ -22,9 +23,8 @@ var createdb bool
 func init() {
 	flag.StringVar(&conf.Server.WSAddr, "addr", ":8989", "websocket port")
 	flag.IntVar(&conf.Server.MaxConnNum, "maxconn", 20000, "Max Conn Num")
-	flag.StringVar(&conf.Server.DBUrl, "pg", "postgres://postgres:haosql@127.0.0.1:5432/postgres?sslmode=disable", "pg addr")
+	flag.StringVar(&conf.Server.DBUrl, "pg", "postgres://postgres:123abc@127.0.0.1:5432/postgres?sslmode=disable", "pg addr")
 	flag.BoolVar(&createdb, "createdb", false, "initial database")
-
 	flag.Parse()
 
 	db.Init(conf.Server.DBUrl)
@@ -51,6 +51,9 @@ func main() {
 }
 
 func createDb() {
+	
+	fmt.Println("--------------------------------------------start")
+	
 	// 建表,只维护和服务器game里面有关的表
 	err := db.C().Sync(model.User{}, model.Room{})
 	if err != nil {
