@@ -35,6 +35,7 @@ func init() {
 
 func main() {
 
+	// test
 	go leaf.Run(
 		game.Module,
 		gate.Module,
